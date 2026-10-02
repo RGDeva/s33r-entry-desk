@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>S33R · KOL Entry Desk</title>
+<style>
+  :root {
+    --bg: #07090d; --panel: #10151c; --line: #1e2733; --text: #e8eef6; --muted: #8b98a8;
+    --orange: #f5a524; --blue: #5aa7ff; --green: #3dd68c; --red: #ff6b6b; --amber: #ffc14d;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "IBM Plex Sans", "Segoe UI", sans-serif; background: radial-gradient(1200px 500px at 10% -10%, #1a2433 0%, var(--bg) 55%); color: var(--text); }
+  header { display: flex; justify-content: space-between; gap: 16px; align-items: flex-end; padding: 28px 32px 18px; border-bottom: 1px solid var(--line); }
+  h1 { margin: 0; font-size: 22px; letter-spacing: 0.04em; }
+  h1 span { color: var(--orange); }
+  h2 { margin: 22px 0 8px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .sub { color: var(--muted); margin-top: 6px; font-size: 13px; max-width: 820px; line-height: 1.45; }
+  .meta { text-align: right; color: var(--muted); font-size: 12px; }
+  .meta strong { color: var(--text); display: block; font-size: 14px; }
+  .bar { display: flex; gap: 10px; flex-wrap: wrap; padding: 16px 32px; }
+  .pill { background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; font-size: 12px; color: var(--muted); }
+  .pill b { color: var(--text); font-weight: 600; }
+  button { background: #1b2636; color: var(--text); border: 1px solid #314158; border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+  button:hover { border-color: var(--blue); }
+  main { padding: 8px 32px 48px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { text-align: left; color: var(--muted); font-weight: 500; padding: 10px 8px; border-bottom: 1px solid var(--line); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+  td { padding: 12px 8px; border-bottom: 1px solid #17202b; vertical-align: middle; }
+  tr:hover td { background: #0e141c; }
+  .sym { font-weight: 700; }
+  .tier { color: var(--muted); font-size: 11px; }
+  .num { font-variant-numeric: tabular-nums; }
+  .badge { display: inline-block; border-radius: 999px; padding: 3px 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em; }
+  .LONG { background: rgba(61,214,140,.15); color: var(--green); }
+  .NEAR { background: rgba(255,193,77,.15); color: var(--amber); }
+  .WAIT { background: rgba(90,167,255,.12); color: var(--blue); }
+  .EXTENDED { background: rgba(255,107,107,.12); color: var(--red); }
+  .barline { height: 6px; background: #1c2633; border-radius: 99px; overflow: hidden; min-width: 80px; }
+  .barline i { display: block; height: 100%; background: var(--orange); }
+  .note { color: var(--muted); font-size: 12px; margin-top: 18px; line-height: 1.5; }
+  .rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 8px 0 6px; }
+  .rule { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 13px; }
+  .rule b { display: block; margin-bottom: 4px; }
+  @media (max-width: 900px) {
+    header, .bar, main { padding-left: 16px; padding-right: 16px; }
+    .rules { grid-template-columns: 1fr 1fr; }
+    .meta { text-align: left; }
+    header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>S33R <span>KOL ENTRY DESK</span></h1>
+    <div class="sub">Humphries book plus the other desks with an actual level: Trading Aloha on AVAX, Crypto Banter on the dip zones, Bitwise/Hougan and Bankless on the buyback and Mount Rushmore names. A long only prints inside the zone.</div>
+  </div>
+  <div class="meta">
+    <strong id="clock">—</strong>
+    Seeded Oct 2, 2026 ~12:26 AM ET<br>
+    Refresh hits Coinbase public prices
+  </div>
+</header>
+<div class="bar">
+  <div class="pill">In a buy zone: <b id="inzone">—</b></div>
+  <div class="pill">Closest: <b id="closest">—</b></div>
+  <div class="pill">Alerts: <b>email + app, hourly 8am–10pm ET</b></div>
+  <button id="refresh">Refresh prices</button>
+</div>
+<main>
+  <div class="rules">
+    <div class="rule"><b class="LONG badge">LONG</b>Inside the buy zone. This is the ping.</div>
+    <div class="rule"><b class="NEAR badge">NEAR</b>Within 4% above the zone high. Starter only.</div>
+    <div class="rule"><b class="WAIT badge">WAIT</b>4–12% above. Do not chase.</div>
+    <div class="rule"><b class="EXTENDED badge">EXTENDED</b>More than 12% above. Thesis can still be right. Entry is not.</div>
+  </div>
+
+  <h2>Live right now</h2>
+  <table>
+    <thead><tr><th>Play</th><th>Who</th><th>Price</th><th>Buy zone</th><th>Invalidation</th><th>Vs zone</th><th>Signal</th></tr></thead>
+    <tbody id="hot"></tbody>
+  </table>
+
+  <h2>Humphries primary book</h2>
+  <table>
+    <thead><tr><th>Play</th><th>Tier</th><th>Price</th><th>Buy zone</th><th>Vs zone</th><th>Signal</th></tr></thead>
+    <tbody id="zach"></tbody>
+  </table>
+
+  <h2>Other conviction desks</h2>
+  <table>
+    <thead><tr><th>Play</th><th>Source</th><th>Price</th><th>Buy zone</th><th>Note</th><th>Signal</th></tr></thead>
+    <tbody id="kol"></tbody>
+  </table>
+  <p class="note">
+    Aloha (Sep 29–30): AVAX long entry 11.308, stop 10.911, target 12.50, later said hold with stop 10.92 and take-profit 12.33. That is a trade plan, not a spot bag.
+    Banter/Pedro (Oct 1): ETH 2650–2697, TAO sweep-and-reclaim of 297, QNT only interesting again at 165–195, HBAR pullback 0.096.
+    Hougan Mount Rushmore still BTC, ETH, SOL, LINK, with HYPE, ZEC, VVV as challengers. Hoffman rotated into VVV, NEAR, ZEC, HYPE, LIT. van de Poppe’s Oct 1 book includes TAO, NEAR, AVAX, OP, SEI — he cut AVAX and NEAR size the day before and added TAO.
+    No Twitter DM or SMS from here. The hourly check emails you and pings the app. Microcap lottery tickets stay off the alert list.
+  </p>
+</main>
+<script>
+const HOT = [
+  { sym:"AVAX", name:"Avalanche", who:"Aloha bot long", pair:"AVAX-USD", zone:[10.91,11.31], stop:"10.91", px:11.14, note:"His entry 11.31, TP 12.33–12.50" },
+  { sym:"QNT", name:"Quant", who:"Humphries $260 long", pair:"QNT-USD", zone:[220,250], stop:"200", px:256.4, note:"Banter wants 165–195 after the blowoff" },
+  { sym:"XLM", name:"Stellar", who:"Humphries 2027 call", pair:"XLM-USD", zone:[0.19,0.21], stop:"0.17", px:0.222, note:"Institutional basket" },
+  { sym:"HYPE", name:"Hyperliquid", who:"Humphries + Hougan + Hoffman", pair:"HYPE-USD", zone:[75,82], stop:"68", px:89.45, note:"Buyback leader, already extended" }
+];
+const ZACH = [
+  { sym:"BTC", name:"Bitcoin", tier:"Core 55%", pair:"BTC-USD", zone:[78000,82000], px:86608 },
+  { sym:"ETH", name:"Ethereum", tier:"Tier 1", pair:"ETH-USD", zone:[2450,2600], px:2738 },
+  { sym:"XRP", name:"XRP", tier:"Tier 1", pair:"XRP-USD", zone:[1.35,1.45], px:1.52 },
+  { sym:"XLM", name:"Stellar", tier:"Tier 2", pair:"XLM-USD", zone:[0.19,0.21], px:0.222 },
+  { sym:"LINK", name:"Chainlink", tier:"Tier 3", pair:"LINK-USD", zone:[12.5,13.5], px:14.52 },
+  { sym:"ZEC", name:"Zcash", tier:"Tier 2", pair:"ZEC-USD", zone:[1050,1200], px:1350 },
+  { sym:"HYPE", name:"Hyperliquid", tier:"Tier 2", pair:"HYPE-USD", zone:[75,82], px:89.45 },
+  { sym:"NEAR", name:"NEAR", tier:"Tier 2", pair:"NEAR-USD", zone:[3.8,4.4], px:4.99 },
+  { sym:"TAO", name:"Bittensor", tier:"Tier 2", pair:"TAO-USD", zone:[260,285], px:310 },
+  { sym:"UNI", name:"Uniswap", tier:"Tier 2", pair:"UNI-USD", zone:[7.8,8.5], px:9.14 },
+  { sym:"QNT", name:"Quant", tier:"Tier 3", pair:"QNT-USD", zone:[220,250], px:256.4 },
+  { sym:"HBAR", name:"Hedera", tier:"Tier 3", pair:"HBAR-USD", zone:[0.085,0.095], px:0.104 },
+  { sym:"BNB", name:"BNB", tier:"Tier 1", pair:"BNB-USD", zone:[700,740], px:776 },
+  { sym:"ONDO", name:"Ondo", tier:"Tier 4", pair:"ONDO-USD", zone:[0.40,0.45], px:0.503 },
+  { sym:"PUMP", name:"Pump.fun", tier:"Tier 3", pair:"PUMP-USD", zone:[0.0042,0.0048], px:0.00585 },
+  { sym:"ARB", name:"Arbitrum", tier:"Tier 3", pair:"ARB-USD", zone:[0.16,0.185], px:0.205 }
+];
+const KOL = [
+  { sym:"AVAX", name:"Avalanche", source:"Trading Aloha", pair:"AVAX-USD", zone:[10.91,11.31], px:11.14, note:"Stop 10.91, target 12.33–12.50" },
+  { sym:"SOL", name:"Solana", source:"Hougan Mount Rushmore", pair:"SOL-USD", zone:[105,115], px:122.1, note:"Conviction, not a timed long" },
+  { sym:"ETH", name:"Ethereum", source:"Banter dip long", pair:"ETH-USD", zone:[2650,2697], px:2738, note:"His long zone toward 3100" },
+  { sym:"TAO", name:"Bittensor", source:"Banter + van de Poppe add", pair:"TAO-USD", zone:[285,297], px:310, note:"Sweep and reclaim of 297" },
+  { sym:"QNT", name:"Quant", source:"Banter correction", pair:"QNT-USD", zone:[165,195], px:256.4, note:"Only after the 550% unwind" },
+  { sym:"HBAR", name:"Hedera", source:"Banter", pair:"HBAR-USD", zone:[0.090,0.096], px:0.104, note:"Pullback before 0.11–0.12" },
+  { sym:"HYPE", name:"Hyperliquid", source:"Hoffman / Hougan", pair:"HYPE-USD", zone:[75,82], px:89.45, note:"Buybacks, no ceiling is not an entry" },
+  { sym:"PUMP", name:"Pump.fun", source:"Hoffman / Humphries", pair:"PUMP-USD", zone:[0.0042,0.0048], px:0.00585, note:"Second-biggest buyback token" },
+  { sym:"ZEC", name:"Zcash", source:"Hougan challenger", pair:"ZEC-USD", zone:[1050,1200], px:1350, note:"Privacy bid, already ran" },
+  { sym:"VVV", name:"Venice", source:"Hougan + Hoffman", pair:"VVV-USD", zone:[20,23], px:27.17, note:"AI thesis, zone is a dip not his fill" },
+  { sym:"SUI", name:"Sui", source:"DocXBT swing list", pair:"SUI-USD", zone:[0.95,1.08], px:1.20, note:"Laggard watch, no hard level" },
+  { sym:"ENA", name:"Ethena", source:"DocXBT", pair:"ENA-USD", zone:[0.20,0.225], px:0.247, note:"Swing only" }
+];
+
+function fmt(n) {
+  if (n >= 1000) return n.toLocaleString(undefined, { maximumFractionDigits: 0 });
+  if (n >= 100) return n.toLocaleString(undefined, { maximumFractionDigits: 2 });
+  if (n >= 1) return n.toLocaleString(undefined, { maximumFractionDigits: 3 });
+  if (n >= 0.01) return n.toFixed(4);
+  return n.toPrecision(3);
+}
+function signal(p) {
+  const hi = p.zone[1], pct = (p.px - hi) / hi;
+  if (p.px <= hi && p.px >= p.zone[0] * 0.985) return { tag:"LONG", text:"IN ZONE" };
+  if (p.px < p.zone[0]) return { tag:"LONG", text:"UNDER ZONE" };
+  if (pct <= 0.04) return { tag:"NEAR", text:"NEAR" };
+  if (pct <= 0.12) return { tag:"WAIT", text:"WAIT" };
+  return { tag:"EXTENDED", text:"EXTENDED" };
+}
+function dist(p) { return (p.px - p.zone[1]) / p.zone[1]; }
+function bar(p) {
+  const fill = Math.max(6, Math.min(100, (p.zone[1] / p.px) * 100));
+  const d = dist(p);
+  return `<div class="barline"><i style="width:${fill}%"></i></div><div class="tier">${d<=0?"inside":"+"+(d*100).toFixed(1)+"% above"}</div>`;
+}
+function render() {
+  const hot = document.getElementById("hot");
+  hot.innerHTML = HOT.map(p => {
+    const s = signal(p);
+    return `<tr><td><div class="sym">${p.sym}</div><div class="tier">${p.name}</div></td><td class="tier">${p.who}</td><td class="num">$${fmt(p.px)}</td><td class="num">$${fmt(p.zone[0])} – $${fmt(p.zone[1])}</td><td class="tier">${p.stop}</td><td>${bar(p)}</td><td><span class="badge ${s.tag}">${s.text}</span></td></tr>`;
+  }).join("");
+  document.getElementById("zach").innerHTML = ZACH.map(p => {
+    const s = signal(p);
+    return `<tr><td><div class="sym">${p.sym}</div><div class="tier">${p.name}</div></td><td class="tier">${p.tier}</td><td class="num">$${fmt(p.px)}</td><td class="num">$${fmt(p.zone[0])} – $${fmt(p.zone[1])}</td><td>${bar(p)}</td><td><span class="badge ${s.tag}">${s.text}</span></td></tr>`;
+  }).join("");
+  document.getElementById("kol").innerHTML = KOL.map(p => {
+    const s = signal(p);
+    return `<tr><td><div class="sym">${p.sym}</div><div class="tier">${p.name}</div></td><td class="tier">${p.source}</td><td class="num">$${fmt(p.px)}</td><td class="num">$${fmt(p.zone[0])} – $${fmt(p.zone[1])}</td><td class="tier">${p.note}</td><td><span class="badge ${s.tag}">${s.text}</span></td></tr>`;
+  }).join("");
+  const all = [...HOT, ...ZACH, ...KOL];
+  const longs = all.filter(p => signal(p).tag === "LONG");
+  const uniq = [...new Set(longs.map(p => p.sym))];
+  let best = null;
+  all.forEach(p => { const d = dist(p); if (!best || d < best.d) best = { sym:p.sym, d }; });
+  document.getElementById("inzone").textContent = uniq.length ? uniq.join(", ") : "none";
+  document.getElementById("closest").textContent = best ? best.sym + (best.d<=0 ? " (in zone)" : " +"+(best.d*100).toFixed(1)+"%") : "—";
+  document.getElementById("clock").textContent = new Date().toLocaleString("en-US", { timeZone:"America/New_York", hour12:true });
+}
+async function refresh() {
+  const btn = document.getElementById("refresh");
+  btn.textContent = "Refreshing…";
+  const lists = [HOT, ZACH, KOL];
+  const seen = new Map();
+  for (const list of lists) for (const p of list) {
+    if (!p.pair || seen.has(p.pair)) continue;
+    seen.set(p.pair, null);
+    try {
+      const r = await fetch("https://api.coinbase.com/v2/prices/"+p.pair+"/spot");
+      if (!r.ok) continue;
+      const n = parseFloat((await r.json()).data.amount);
+      if (n > 0) seen.set(p.pair, n);
+    } catch (e) {}
+  }
+  for (const list of lists) for (const p of list) if (seen.get(p.pair)) p.px = seen.get(p.pair);
+  btn.textContent = "Refresh prices";
+  render();
+}
+document.getElementById("refresh").onclick = refresh;
+render();
+</script>
+</body>
+</html>
