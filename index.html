@@ -54,7 +54,7 @@
 <header>
   <div>
     <h1>S33R <span>KOL ENTRY DESK</span></h1>
-    <div class="sub">Humphries book plus the other desks with an actual level: Trading Aloha on AVAX, Crypto Banter on the dip zones, Bitwise/Hougan and Bankless on the buyback and Mount Rushmore names. A long only prints inside the zone.</div>
+    <div class="sub">Tech and community first. Memes are a scalp book only. A long-term add needs a product, not a ticker. Launchpad pings are filtered: sub $30k, not a copy, liquidity not pullable. Robinhood Chain trenches are treated as hostile.</div>
   </div>
   <div class="meta">
     <strong id="clock">—</strong>
@@ -82,7 +82,16 @@
     <tbody id="hot"></tbody>
   </table>
 
-  <h2>Humphries primary book</h2>
+  <h2>Hold vs scalp</h2>
+  <table>
+    <thead><tr><th>Bucket</th><th>Names</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td class="sym">Hold</td><td>BTC, ETH, TAO, ZAMA, GRASS, LINK</td><td class="tier">Product or settlement layer. Add only inside the zone. These are the book.</td></tr>
+      <tr><td class="sym">Scalp</td><td>AVAX plan, QNT swing, Elon-reactive liquid tickers</td><td class="tier">Needs a stop. AVAX invalidates at 10.91. Do not turn a tweet into a bag.</td></tr>
+      <tr><td class="sym">Watch, do not chase</td><td>HYPE, PUMP, ZEC, NEAR, SOL</td><td class="tier">Thesis can be right and the entry still late.</td></tr>
+      <tr><td class="sym">Launch filter</td><td>Pump.fun and Robinhood pads</td><td class="tier">Email only if mcap under $30k, novel tech or real community, liquidity locked, not a copy ticker, not a known sniper cluster. Most will fail this.</td></tr>
+    </tbody>
+  </table>
   <table>
     <thead><tr><th>Play</th><th>Tier</th><th>Price</th><th>Buy zone</th><th>Vs zone</th><th>Signal</th></tr></thead>
     <tbody id="zach"></tbody>
@@ -102,7 +111,8 @@
 </main>
 <script>
 const HOT = [
-  { sym:"AVAX", name:"Avalanche", who:"Aloha bot long", pair:"AVAX-USD", zone:[10.91,11.31], stop:"10.91", px:11.14, note:"His entry 11.31, TP 12.33–12.50" },
+  { sym:"ZAMA", name:"Zama", who:"Humphries conviction, FHE", pair:"ZAMA-USD", zone:[0.070,0.078], stop:"0.064", px:0.084, note:"Confidential compute. Not a microcap." },
+  { sym:"GRASS", name:"Grass", who:"DePIN data for AI", pair:"GRASS-USD", zone:[0.55,0.64], stop:"0.48", px:0.717, note:"Bandwidth network. Up hard on the month." },
   { sym:"QNT", name:"Quant", who:"Humphries $260 long", pair:"QNT-USD", zone:[220,250], stop:"200", px:256.4, note:"Banter wants 165–195 after the blowoff" },
   { sym:"XLM", name:"Stellar", who:"Humphries 2027 call", pair:"XLM-USD", zone:[0.19,0.21], stop:"0.17", px:0.222, note:"Institutional basket" },
   { sym:"HYPE", name:"Hyperliquid", who:"Humphries + Hougan + Hoffman", pair:"HYPE-USD", zone:[75,82], stop:"68", px:89.45, note:"Buyback leader, already extended" }
@@ -126,7 +136,8 @@ const ZACH = [
   { sym:"ARB", name:"Arbitrum", tier:"Tier 3", pair:"ARB-USD", zone:[0.16,0.185], px:0.205 }
 ];
 const KOL = [
-  { sym:"AVAX", name:"Avalanche", source:"Trading Aloha", pair:"AVAX-USD", zone:[10.91,11.31], px:11.14, note:"Stop 10.91, target 12.33–12.50" },
+  { sym:"ZAMA", name:"Zama", source:"Humphries + FHE thesis", pair:"ZAMA-USD", zone:[0.070,0.078], px:0.084, note:"Encrypted contracts. Hold, not a scalp." },
+  { sym:"GRASS", name:"Grass", source:"DePIN / AI data", pair:"GRASS-USD", zone:[0.55,0.64], px:0.717, note:"Bandwidth for model data. Pullback only." },
   { sym:"SOL", name:"Solana", source:"Hougan Mount Rushmore", pair:"SOL-USD", zone:[105,115], px:122.1, note:"Conviction, not a timed long" },
   { sym:"ETH", name:"Ethereum", source:"Banter dip long", pair:"ETH-USD", zone:[2650,2697], px:2738, note:"His long zone toward 3100" },
   { sym:"TAO", name:"Bittensor", source:"Banter + van de Poppe add", pair:"TAO-USD", zone:[285,297], px:310, note:"Sweep and reclaim of 297" },
