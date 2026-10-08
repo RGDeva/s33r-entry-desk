@@ -54,18 +54,18 @@
 <header>
   <div>
     <h1>S33R <span>KOL ENTRY DESK</span></h1>
-    <div class="sub">Tech and community first. Memes are a scalp book only. A long-term add needs a product, not a ticker. Launchpad pings are filtered: sub $30k, not a copy, liquidity not pullable. Robinhood Chain trenches are treated as hostile.</div>
+    <div class="sub">Two jobs. The hourly check only pings when a price is inside a zone. The 8:30 AM ET scan reads a fixed source list and returns at most two holds, two dips, and one avoid. A call without a level or a second source does not get size.</div>
   </div>
   <div class="meta">
     <strong id="clock">—</strong>
-    Seeded Oct 2, 2026 ~12:26 AM ET<br>
+    Seeded Oct 8, 2026 ~2:05 AM ET<br>
     Refresh hits Coinbase public prices
   </div>
 </header>
 <div class="bar">
   <div class="pill">In a buy zone: <b id="inzone">—</b></div>
   <div class="pill">Closest: <b id="closest">—</b></div>
-  <div class="pill">Alerts: <b>email + app, hourly 8am–10pm ET</b></div>
+  <div class="pill">Alerts: <b>zones hourly, sources 8:30am ET</b></div>
   <button id="refresh">Refresh prices</button>
 </div>
 <main>
@@ -74,6 +74,26 @@
     <div class="rule"><b class="NEAR badge">NEAR</b>Within 4% above the zone high. Starter only.</div>
     <div class="rule"><b class="WAIT badge">WAIT</b>4–12% above. Do not chase.</div>
     <div class="rule"><b class="EXTENDED badge">EXTENDED</b>More than 12% above. Thesis can still be right. Entry is not.</div>
+  </div>
+
+  <h2>Source desk</h2>
+  <table>
+    <thead><tr><th>Use</th><th>Accounts</th><th>Rule</th></tr></thead>
+    <tbody>
+      <tr><td class="sym">When to trade</td><td>@HsakaTrades, @CryptoDonAlt, @DaanCrypto, @cobie</td><td class="tier">Structure and invalidation. Cobie is a filter, not a buy list.</td></tr>
+      <tr><td class="sym">Levels</td><td>@CryptoMichNL, @TradingAloha, @ali_charts</td><td class="tier">A price and a failure point, or it does not count.</td></tr>
+      <tr><td class="sym">Do not get robbed</td><td>@zachxbt, @lookonchain, @EmberCN</td><td class="tier">Extraction and wallets. An avoid, not a long.</td></tr>
+      <tr><td class="sym">Institutional</td><td>@Matt_Hougan, @RaoulGMI</td><td class="tier">BTC, ETH, SOL, LINK. Slow. Not a scalp.</td></tr>
+      <tr><td class="sym">Narrative, discounted</td><td>@ZachHumphries, @milesdeutscher</td><td class="tier">Themes only. Needs a second source before full size.</td></tr>
+      <tr><td class="sym">Meme scalp</td><td>@blknoiz06 only</td><td class="tier">Contract and a level, or skip. No 1000x posts.</td></tr>
+    </tbody>
+  </table>
+  <h2>Daily scan buckets</h2>
+  <div class="rules">
+    <div class="rule"><b class="LONG badge">HOLD</b>Mid or large cap, product thesis, price zone. Prefer two sources.</div>
+    <div class="rule"><b class="NEAR badge">DIP</b>Under $300M only with a named thesis and a contract. Default is none.</div>
+    <div class="rule"><b class="EXTENDED badge">AVOID</b>Invalidation or an extraction flag. Robinhood Chain trenches stay hostile.</div>
+    <div class="rule"><b class="WAIT badge">QUIET</b>If the day is noise, the email is one line.</div>
   </div>
 
   <h2>Live right now</h2>
@@ -105,17 +125,16 @@
   <p class="note">
     Aloha (Sep 29–30): AVAX long entry 11.308, stop 10.911, target 12.50, later said hold with stop 10.92 and take-profit 12.33. That is a trade plan, not a spot bag.
     Banter/Pedro (Oct 1): ETH 2650–2697, TAO sweep-and-reclaim of 297, QNT only interesting again at 165–195, HBAR pullback 0.096.
-    Hougan Mount Rushmore still BTC, ETH, SOL, LINK, with HYPE, ZEC, VVV as challengers. Hoffman rotated into VVV, NEAR, ZEC, HYPE, LIT. van de Poppe’s Oct 1 book includes TAO, NEAR, AVAX, OP, SEI — he cut AVAX and NEAR size the day before and added TAO.
-    No Twitter DM or SMS from here. The hourly check emails you and pings the app. Microcap lottery tickets stay off the alert list.
+    van de Poppe, Oct 6: holding PLUME, ONDO, W, EIGEN, TAO. Not chasing NEAR after the run from 1.20 to 4. Wants a sweep first.
+    Daily source scan emails at 8:30 AM ET. Hourly zone check still runs 8 AM–10 PM ET. Ash Crypto, WatcherGuru, and Robinhood-chain 85x posts are not sources.
   </p>
 </main>
 <script>
 const HOT = [
-  { sym:"ZAMA", name:"Zama", who:"Humphries conviction, FHE", pair:"ZAMA-USD", zone:[0.070,0.078], stop:"0.064", px:0.084, note:"Confidential compute. Not a microcap." },
-  { sym:"GRASS", name:"Grass", who:"DePIN data for AI", pair:"GRASS-USD", zone:[0.55,0.64], stop:"0.48", px:0.717, note:"Bandwidth network. Up hard on the month." },
-  { sym:"UNI", name:"Uniswap v4", who:"Humphries hooks theme", pair:"UNI-USD", zone:[7.80,8.50], stop:"7.40", px:9.05, note:"v4 is 54% of ETH volume. Long the dip, not $9+." },
-  { sym:"LIT", name:"Lighter", who:"Humphries large, perps venue", pair:null, zone:[3.40,3.60], stop:"3.30", px:3.87, note:"ZK perps. Bounce day. Do not chase." },
-  { sym:"ZCAT", name:"Anonymous Cat", who:"Privacy meme scalp", pair:null, zone:[0.032,0.040], stop:"0.028", px:0.042, note:"Not a hold. 76% off the September high." },
+  { sym:"ZAMA", name:"Zama", who:"Humphries conviction, FHE", pair:"ZAMA-USD", zone:[0.070,0.078], stop:"0.064", px:0.076, note:"Confidential compute. In the add." },
+  { sym:"GRASS", name:"Grass", who:"DePIN data for AI", pair:"GRASS-USD", zone:[0.55,0.64], stop:"0.48", px:0.622, note:"Bandwidth network. Inside the zone." },
+  { sym:"UNI", name:"Uniswap v4", who:"Humphries hooks theme", pair:"UNI-USD", zone:[7.80,8.50], stop:"7.40", px:7.74, note:"Just under the zone low. Stop is 7.40." },
+  { sym:"QNT", name:"Quant", who:"Humphries $260 long", pair:"QNT-USD", zone:[220,250], stop:"200", px:241.5, note:"Under his fill and inside the zone." },
   { sym:"XLM", name:"Stellar", who:"Humphries 2027 call", pair:"XLM-USD", zone:[0.19,0.21], stop:"0.17", px:0.222, note:"Institutional basket" },
   { sym:"HYPE", name:"Hyperliquid", who:"Humphries + Hougan + Hoffman", pair:"HYPE-USD", zone:[75,82], stop:"68", px:89.45, note:"Buyback leader, already extended" }
 ];
